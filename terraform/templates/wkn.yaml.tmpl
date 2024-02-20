@@ -1,0 +1,17 @@
+cluster:
+  network:
+    cni:
+      name: none
+  proxy:
+    disabled: true
+machine:
+  features:
+    kubePrism:
+      enabled: true
+      port: 7445
+  time:
+      servers:
+          - ntp1.hetzner.de
+          - ntp2.hetzner.com
+          - ntp3.hetzner.net
+          - time.cloudflare.com
