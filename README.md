@@ -53,6 +53,7 @@ terraform apply
 
 ```bash
 # warning this command remove yours old configurations (if their exists)
+
 terraform output -raw talosconfig > ~/.talos/config
 terraform output -raw kubeconfig > ~/.kube/config
 ```
