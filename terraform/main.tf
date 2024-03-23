@@ -137,6 +137,17 @@ resource "talos_machine_bootstrap" "bootstrap" {
   ]
 }
 
+resource "helm_release" "cilium" {
+  name       = "cilium"
+  chart      = "cilium"
+  repository = "https://helm.cilium.io/"
+  version    = "1.14.0"
+
+  values = [
+    file("manifests/cilium.yaml")
+  ]
+}
+
 resource "kubernetes_namespace" "flux-system" {
   metadata {
     name = "flux-system"
