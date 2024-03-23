@@ -38,17 +38,13 @@ machine:
 
 
 cluster:
-#  network:
-#    cni:
-#      name: none
-#    TODO: automatic init cilium when Talos is first booting
-#    urls:
-#      - https://raw.githubusercontent.com/
-#  proxy:
-#    disabled: false
+  externalCloudProvider:
+    enabled: true
+  network:
+    cni:
+      name: none
+  proxy:
+    disabled: false
   allowSchedulingOnControlPlanes: true
-#  TODO: install base infrastructure apps automatic 
-#  externalCloudProvider:
-#    enabled: true
-#    manifests:
-#      - https://raw.githubusercontent.com
+  externalCloudProvider:
+    enabled: true
