@@ -1,5 +1,5 @@
 # mbrc
----
+
 ![terraform](https://img.shields.io/badge/Hetzner-D50C2D?style=for-the-badge&logo=hetzner&logoColor=white)
 ![k8s](https://img.shields.io/badge/kubernetes%20-%23326ce5.svg?&style=for-the-badge&logo=kubernetes&logoColor=white)
 ![terraform](https://img.shields.io/badge/terraform%20-%235835CC.svg?&style=for-the-badge&logo=terraform&logoColor=white)
@@ -52,7 +52,7 @@ creation_rules:
 Next, you'll need to include `.sops.yaml` in your repository. This step is crucial to allow other project contributors
 to encrypt their secrets using the public key. Remember, keep the `age.agekey` private key secure.
 
-### 3. Crate k8s cluster
+### 3. Create k8s cluster
 
 ```shell
 terraform init
@@ -62,7 +62,7 @@ terraform apply
 ### 4. Save kubeconfig & talosconfig to local machine
 
 ```bash
-# warning this command remove yours old configurations (if their exists)
+# Warning! This command remove yours old configurations (if their exists)
 
 terraform output -raw talosconfig > ~/.talos/config
 terraform output -raw kubeconfig > ~/.kube/config
