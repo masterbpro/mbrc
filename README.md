@@ -35,9 +35,3 @@ terraform apply
 terraform output -raw talosconfig > ~/.talos/config
 terraform output -raw kubeconfig > ~/.kube/config
 ```
-
-#### Set Hetzner API token in k8s secrets for CCM
-
-```shell
-kubectl create secret generic hcloud -n kube-system --from-literal=token=TOKEN_FROM_HETZNER
-```
