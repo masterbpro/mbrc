@@ -181,9 +181,9 @@ resource "kubernetes_secret" "cf-api-token" {
   ]
 }
 
-resource "kubernetes_secret" "hcloud-secret" {
+resource "kubernetes_secret" "hcloud" {
   metadata {
-    name      = "hcloud-secret"
+    name      = "hcloud"
     namespace = "kube-system"
   }
   data = {
