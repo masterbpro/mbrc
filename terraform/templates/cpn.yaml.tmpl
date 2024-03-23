@@ -38,14 +38,14 @@ machine:
 
 
 cluster:
-  network:
-    cni:
-      name: none
+#  network:
+#    cni:
+#      name: none
 #    TODO: automatic init cilium when Talos is first booting
 #    urls:
 #      - https://raw.githubusercontent.com/
-  proxy:
-    disabled: true
+#  proxy:
+#    disabled: false
   allowSchedulingOnControlPlanes: true
   inlineManifests:
     - name: hcloud-secret
