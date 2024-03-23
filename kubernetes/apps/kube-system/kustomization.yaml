@@ -4,4 +4,5 @@ resources:
   # Pre Flux kustomizations
   - namespace.yaml
   # Flux kustomizations
+  - cilium/ks.yaml
   - hccm/ks.yaml
