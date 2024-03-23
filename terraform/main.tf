@@ -148,6 +148,19 @@ resource "kubernetes_namespace" "flux-system" {
   ]
 }
 
+resource "kubernetes_secret" "sops" {
+  metadata {
+    name      = "sops-age"
+    namespace = "flux-system"
+  }
+  data = {
+    "age.agekey" = file(var.sops_private_key)
+  }
+  depends_on = [
+    kubernetes_namespace.flux-system
+  ]
+}
+
 resource "kubernetes_namespace" "system" {
   metadata {
     name = "system"

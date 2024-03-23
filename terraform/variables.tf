@@ -23,3 +23,6 @@ variable "wkn_count" {
   default = 2
 }
 
+variable "sops_private_key" {
+  default = "../age.agekey"
+}

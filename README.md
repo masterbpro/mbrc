@@ -17,30 +17,16 @@ Kubernetes deployment and focus on your applications with confidence.
 | CPN         | Control Panel Node     |
 | WKN         | Worker Kubernetes Node |
 
-### Install tools
+### 0. Install tools
 
 ```shell
+brew install age
 brew install terraform
 curl -sL https://talos.dev/install | sh
 brew install kubectl
 ```
 
-### Crate k8s cluster
-
-```shell
-terraform init
-terraform apply
-```
-
-### Save kubeconfig & talosconfig to local machine
-
-```bash
-# warning this command remove yours old configurations (if their exists)
-terraform output -raw talosconfig > ~/.talos/config
-terraform output -raw kubeconfig > ~/.kube/config
-```
-
-### Create private and public key for SOPS
+### 1. Create private and public key for SOPS
 
 ```shell
 age-keygen -o age.agekey && 
@@ -53,15 +39,38 @@ creation_rules:
 ```
 
 Next, you'll need to include `.sops.yaml` in your repository. This step is crucial to allow other project contributors
-to
-encrypt their secrets using the public key. Remember, keep the `age.agekey` private key secure.
+to encrypt their secrets using the public key. Remember, keep the `age.agekey` private key secure.
 
-Additionally, for Kubernetes to decrypt our secrets, we'll place our private key in Kubernetes:
+### 2. Crate k8s cluster
 
 ```shell
-kubeclt create namespace flux-system
-kubectl create secret generic sops-age --namespace=flux-system --from-file=age.agekey
+cd terraform
+terraform init
+terraform apply
 ```
+
+### 3. Save kubeconfig & talosconfig to local machine
+
+```bash
+# warning this command remove yours old configurations (if their exists)
+terraform output -raw talosconfig > ~/.talos/config
+terraform output -raw kubeconfig > ~/.kube/config
+```
+
+### 4. Done 🎉
+
+```shell
+# you can check cluster status via `kubectl get nodes`.
+# Output will be something like this:
+
+(base) user@host terraform % kubectl get nodes
+NAME     STATUS   ROLES           AGE   VERSION
+cpn-00   Ready    control-plane   25m   v1.28.1
+cpn-01   Ready    control-plane   25m   v1.28.1
+cpn-02   Ready    control-plane   25m   v1.28.1
+```
+
+---
 
 <details>
 <summary>SOPS Example</summary>
