@@ -26,7 +26,18 @@ curl -sL https://talos.dev/install | sh
 brew install kubectl
 ```
 
-### 1. Create private and public key for SOPS
+### 1. Prepare environments variables
+
+```shell
+# you need change values before execute command
+cat << EOF > terraform/terraform.tfvars
+hcloud_token = "YOUR_TOKEN_FROM_HETZNER"
+cf_token     = "YOUR_TOKEN_FROM_CLOUDFLARE"
+wkn_count    = 0
+EOF
+```
+
+### 2. Create private and public key for SOPS
 
 ```shell
 age-keygen -o age.agekey && 
@@ -41,15 +52,14 @@ creation_rules:
 Next, you'll need to include `.sops.yaml` in your repository. This step is crucial to allow other project contributors
 to encrypt their secrets using the public key. Remember, keep the `age.agekey` private key secure.
 
-### 2. Crate k8s cluster
+### 3. Crate k8s cluster
 
 ```shell
-cd terraform
 terraform init
 terraform apply
 ```
 
-### 3. Save kubeconfig & talosconfig to local machine
+### 4. Save kubeconfig & talosconfig to local machine
 
 ```bash
 # warning this command remove yours old configurations (if their exists)
@@ -58,7 +68,7 @@ terraform output -raw talosconfig > ~/.talos/config
 terraform output -raw kubeconfig > ~/.kube/config
 ```
 
-### 4. Done 🎉
+### 5. Done 🎉
 
 ```shell
 # you can check cluster status via `kubectl get nodes`.
