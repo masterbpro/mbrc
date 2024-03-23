@@ -4,8 +4,8 @@ metadata:
   name: cluster-apps-cert-manager
   namespace: flux-system
 spec:
-  targetNamespace: system
-  path: kubernetes/apps/system/cert-manager/app
+  targetNamespace: base-system
+  path: kubernetes/apps/base-system/cert-manager/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -14,7 +14,7 @@ spec:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: cert-manager
-      namespace: system
+      namespace: base-system
   interval: 15m
   retryInterval: 1m
   timeout: 10m
@@ -27,7 +27,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-cert-manager
-  path: kubernetes/apps/system/cert-manager/crds
+  path: kubernetes/apps/base-system/cert-manager/crds
   prune: true
   sourceRef:
     kind: GitRepository

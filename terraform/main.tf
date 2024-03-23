@@ -157,9 +157,9 @@ resource "kubernetes_secret" "sops" {
   ]
 }
 
-resource "kubernetes_namespace" "system" {
+resource "kubernetes_namespace" "base-system" {
   metadata {
-    name = "system"
+    name = "base-system"
   }
   depends_on = [
     talos_machine_bootstrap.bootstrap
@@ -169,13 +169,13 @@ resource "kubernetes_namespace" "system" {
 resource "kubernetes_secret" "cf-api-token" {
   metadata {
     name      = "cf-api-token"
-    namespace = "system"
+    namespace = "base-system"
   }
   data = {
     api-token = var.cf_token
   }
   depends_on = [
-    kubernetes_namespace.system
+    kubernetes_namespace.base-system
   ]
 }
 
