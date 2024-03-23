@@ -97,11 +97,7 @@ data "talos_machine_configuration" "cpn" {
   machine_type     = "controlplane"
   machine_secrets  = talos_machine_secrets.this.machine_secrets
   config_patches   = [
-    templatefile("${path.module}/templates/cpn.yaml.tmpl",
-      {
-        hcloud_token = var.hcloud_token,
-        hcloud_image = data.hcloud_image.talos.id
-      }
+    templatefile("${path.module}/templates/cpn.yaml.tmpl", {}
     )
   ]
 }
