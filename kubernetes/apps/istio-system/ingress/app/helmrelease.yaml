@@ -24,5 +24,8 @@ spec:
         namespace: flux-system
   interval: 15m
   values:
+    service:
+      ports:
+      type: ClusterIP
     autoscaling:
       minReplicas: 2
