@@ -17,7 +17,7 @@ spec:
   chart:
     spec:
       chart: hcloud-cloud-controller-manager
-      version: "1.20.1"
+      version: "1.19.0"
       sourceRef:
         kind: HelmRepository
         name: hcloud
