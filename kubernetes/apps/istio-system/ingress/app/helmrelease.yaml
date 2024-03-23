@@ -26,5 +26,5 @@ spec:
   values:
     kind: DaemonSet
     service:
-      ports:
+      loadBalancerIP: "167.233.11.229"
       type: ClusterIP
