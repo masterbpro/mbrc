@@ -140,6 +140,7 @@ resource "talos_machine_bootstrap" "bootstrap" {
 resource "helm_release" "cilium" {
   name       = "cilium"
   chart      = "cilium"
+  namespace  = "kube-system"
   repository = "https://helm.cilium.io/"
   version    = "1.14.0"
 
