@@ -70,15 +70,15 @@ resource "hcloud_server" "wkn" {
   user_data = data.talos_machine_configuration.wkn.machine_configuration
 }
 
-resource "hcloud_volume" "volume" {
-  name       = "volume-${format("%02d", count.index)}"
-  size       = 10
-  count      = length(hcloud_server.cpn)
-  server_id  = hcloud_server.cpn[count.index].id
-  depends_on = [
-    hcloud_server.cpn
-  ]
-}
+#resource "hcloud_volume" "volume" {
+#  name       = "volume-${format("%02d", count.index)}"
+#  size       = 10
+#  count      = length(hcloud_server.cpn)
+#  server_id  = hcloud_server.cpn[count.index].id
+#  depends_on = [
+#    hcloud_server.cpn
+#  ]
+#}
 
 # Talos configuration
 resource "talos_machine_secrets" "this" {}
@@ -139,7 +139,7 @@ resource "talos_machine_bootstrap" "bootstrap" {
   ]
 }
 
-resource "kubernetes_namespace" "flux" {
+resource "kubernetes_namespace" "flux-system" {
   metadata {
     name = "flux-system"
   }
@@ -160,10 +160,10 @@ resource "kubernetes_namespace" "system" {
 resource "kubernetes_secret" "cf-api-token" {
   metadata {
     name      = "cf-api-token"
-    namespace = kubernetes_namespace.system.metadata.name
+    namespace = "system"
   }
   data = {
-    api-token = base64encode(var.cf_token)
+    api-token = var.cf_token
   }
   depends_on = [
     kubernetes_namespace.system
@@ -176,8 +176,8 @@ resource "kubernetes_secret" "hcloud-secret" {
     namespace = "kube-system"
   }
   data = {
-    token = base64encode(var.hcloud_token)
-    image = base64encode(data.hcloud_image.talos.id)
+    token = var.hcloud_token
+    image = data.hcloud_image.talos.id
   }
   depends_on = [
     talos_machine_bootstrap.bootstrap
