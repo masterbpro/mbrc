@@ -24,6 +24,7 @@ spec:
         namespace: flux-system
   interval: 15m
   values:
+    kind: DaemonSet
     service:
       loadBalancerIP: "167.233.11.229"
       type: LoadBalancer
