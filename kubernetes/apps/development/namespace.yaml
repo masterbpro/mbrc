@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: development
+  labels:
+    istio-discovery: enabled
+    istio-injection: enabled
+    pod-security.kubernetes.io/enforce: privileged # only for development purposes

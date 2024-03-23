@@ -1,0 +1,37 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-cert-manager
+  namespace: flux-system
+spec:
+  targetNamespace: system
+  path: kubernetes/apps/system/cert-manager/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: cert-manager
+      namespace: system
+  interval: 15m
+  retryInterval: 1m
+  timeout: 10m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-cert-manager-crds
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cluster-apps-cert-manager
+  path: kubernetes/apps/system/cert-manager/crds
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  interval: 15m
+  retryInterval: 1m
+  timeout: 10m

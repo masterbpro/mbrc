@@ -47,18 +47,6 @@ cluster:
 #  proxy:
 #    disabled: false
   allowSchedulingOnControlPlanes: true
-  inlineManifests:
-    - name: hcloud-secret
-      contents: |-
-        apiVersion: v1
-        kind: Secret
-        type: Opaque
-        metadata:
-          name: hcloud
-          namespace: kube-system
-        data:
-          token: ${base64encode(hcloud_token)}
-          image: ${base64encode(hcloud_image)}
 #  TODO: install base infrastructure apps automatic 
 #  externalCloudProvider:
 #    enabled: true

@@ -15,6 +15,11 @@ terraform {
       version = "0.3.4"
     }
 
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "2.27.0"
+    }
+
     helm = {
       source  = "hashicorp/helm"
       version = "2.11.0"
@@ -28,6 +33,12 @@ provider "hcloud" {
   token = var.hcloud_token
 }
 
+provider "kubernetes" {
+  host                   = data.talos_cluster_kubeconfig.this.kubernetes_client_configuration.host
+  client_certificate     = base64decode(data.talos_cluster_kubeconfig.this.kubernetes_client_configuration.client_certificate)
+  client_key             = base64decode(data.talos_cluster_kubeconfig.this.kubernetes_client_configuration.client_key)
+  cluster_ca_certificate = base64decode(data.talos_cluster_kubeconfig.this.kubernetes_client_configuration.ca_certificate)
+}
 
 provider "helm" {
   kubernetes {

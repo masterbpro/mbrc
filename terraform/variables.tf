@@ -2,6 +2,10 @@ variable "hcloud_token" {
   default = ""
 }
 
+variable "cf_token" {
+  default = ""
+}
+
 variable "cluster_name" {
   default = "mbrc"
 }

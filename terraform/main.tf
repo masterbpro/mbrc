@@ -139,6 +139,52 @@ resource "talos_machine_bootstrap" "bootstrap" {
   ]
 }
 
+resource "kubernetes_namespace" "flux" {
+  metadata {
+    name = "flux-system"
+  }
+  depends_on = [
+    talos_machine_bootstrap.bootstrap
+  ]
+}
+
+resource "kubernetes_namespace" "system" {
+  metadata {
+    name = "system"
+  }
+  depends_on = [
+    talos_machine_bootstrap.bootstrap
+  ]
+}
+
+resource "kubernetes_secret" "cf-api-token" {
+  metadata {
+    name      = "cf-api-token"
+    namespace = kubernetes_namespace.system.metadata.name
+  }
+  data = {
+    api-token = base64encode(var.cf_token)
+  }
+  depends_on = [
+    kubernetes_namespace.system
+  ]
+}
+
+resource "kubernetes_secret" "hcloud-secret" {
+  metadata {
+    name      = "hcloud-secret"
+    namespace = "kube-system"
+  }
+  data = {
+    token = base64encode(var.hcloud_token)
+    image = base64encode(data.hcloud_image.talos.id)
+  }
+  depends_on = [
+    talos_machine_bootstrap.bootstrap
+  ]
+}
+
+
 data "talos_cluster_kubeconfig" "this" {
   client_configuration = talos_machine_secrets.this.client_configuration
   node                 = hcloud_server.cpn[0].ipv4_address

@@ -1,0 +1,29 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app base
+  namespace: &ns istio-system
+spec:
+  releaseName: base
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  chart:
+    spec:
+      chart: base
+      version: "1.20.1"
+      sourceRef:
+        kind: HelmRepository
+        name: istio
+        namespace: flux-system
+  interval: 15m
+  values:
+    global:
+      istioNamespace: *ns
+
