@@ -4,7 +4,6 @@ metadata:
   name: main
   namespace: development
   annotations:
-    # load-balancer.hetzner.cloud/network-zone
     load-balancer.hetzner.cloud/location: nbg1
     load-balancer.hetzner.cloud/network-zone: eu-central
 #    load-balancer.hetzner.cloud/name: cpn
