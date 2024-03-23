@@ -24,8 +24,7 @@ spec:
         namespace: flux-system
   interval: 15m
   values:
+    kind: DaemonSet
     service:
       ports:
       type: ClusterIP
-    autoscaling:
-      minReplicas: 2
