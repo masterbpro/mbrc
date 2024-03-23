@@ -4,6 +4,8 @@ metadata:
   name: cluster-apps-base
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: cluster-apps-cert-manager
   targetNamespace: istio-system
   path: kubernetes/apps/istio-system/base/app
   prune: true
