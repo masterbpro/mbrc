@@ -6,7 +6,7 @@
 ![helm](https://img.shields.io/badge/Helm-0F1689?style=for-the-badge&logo=Helm&labelColor=0F1689)
 ![cloudflare](https://img.shields.io/badge/Cloudflare-F38020?style=for-the-badge&logo=Cloudflare&logoColor=white)
 
-This repository enable easy deployment of Kubernetes clusters on Hetzner Cloud using Tales and Terraform. Benefit from
+This repository enable easy deployment of Kubernetes clusters on Hetzner Cloud using Talos OS and Terraform. Benefit from
 scalable, and automated setup, leveraging infrastructure as core principles for efficient management. Simplify
 Kubernetes deployment and focus on your applications with confidence.
 
@@ -106,7 +106,7 @@ data:
 # You can encrypt any files by using the .sops.yaml file.
 sops -e -i db-auth.yaml
 
-# You can decrypt it only if you have the age.age key file.
+# You can decrypt it only if you have the age.agekey file.
 export SOPS_AGE_KEY_FILE=age.agekey
 sops -i -d db-auth.yaml.yaml
 ```
