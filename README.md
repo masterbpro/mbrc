@@ -6,7 +6,8 @@
 ![helm](https://img.shields.io/badge/Helm-0F1689?style=for-the-badge&logo=Helm&labelColor=0F1689)
 ![cloudflare](https://img.shields.io/badge/Cloudflare-F38020?style=for-the-badge&logo=Cloudflare&logoColor=white)
 
-This repository enable easy deployment of Kubernetes clusters on Hetzner Cloud using Talos OS and Terraform. Benefit from
+This repository enable easy deployment of Kubernetes clusters on Hetzner Cloud using Talos OS and Terraform. Benefit
+from
 scalable, and automated setup, leveraging infrastructure as core principles for efficient management. Simplify
 Kubernetes deployment and focus on your applications with confidence.
 
@@ -53,6 +54,10 @@ Next, you'll need to include `.sops.yaml` in your repository. This step is cruci
 to encrypt their secrets using the public key. Remember, keep the `age.agekey` private key secure.
 
 ### 3. Create k8s cluster
+
+Before enter command bellow you need prepare Talos snapshot in Hetzner Cloud. For this, you can use
+official [instruction](https://www.talos.dev/v1.6/talos-guides/install/cloud-platforms/hetzner/#rescue-mode).
+You have to give the name of the snapshot `talos-1.15`
 
 ```shell
 terraform init
