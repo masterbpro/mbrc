@@ -117,3 +117,20 @@ sops -i -d db-auth.yaml.yaml
 ```
 
 </details>
+
+
+<details>
+<summary>FluxCD Example</summary>
+
+```shell
+
+export GITHUB_TOKEN=ghp-xyz
+flux bootstrap github --owner=ownerName --repository=mbrc --path=kubernetes/flux
+```
+
+```shell
+export GITLAB_TOKEN=glpat-xyz
+flux bootstrap gitlab --owner=groupName --repository=mbrc --path=kubernetes/flux
+```
+
+</details>
