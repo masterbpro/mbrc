@@ -26,3 +26,7 @@ variable "wkn_count" {
 variable "sops_private_key" {
   default = "../age.agekey"
 }
+
+variable "hcloud_image" {
+  default = ""
+}
