@@ -68,16 +68,6 @@ resource "hcloud_server" "wkn" {
   user_data = data.talos_machine_configuration.wkn.machine_configuration
 }
 
-#resource "hcloud_volume" "volume" {
-#  name       = "volume-${format("%02d", count.index)}"
-#  size       = 10
-#  count      = length(hcloud_server.cpn)
-#  server_id  = hcloud_server.cpn[count.index].id
-#  depends_on = [
-#    hcloud_server.cpn
-#  ]
-#}
-
 # Talos configuration
 resource "talos_machine_secrets" "this" {}
 
