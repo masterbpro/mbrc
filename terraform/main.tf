@@ -1,7 +1,3 @@
-data "hcloud_image" "talos" {
-  with_selector = "name=talos1.15"
-}
-
 resource "hcloud_load_balancer" "main" {
   name               = "cpn"
   load_balancer_type = "lb11"
@@ -13,7 +9,7 @@ resource "hcloud_load_balancer_target" "main" {
   type             = "server"
   load_balancer_id = hcloud_load_balancer.main.id
   server_id        = hcloud_server.cpn[count.index].id
-  depends_on       = [
+  depends_on = [
     hcloud_server.cpn
   ]
 }
@@ -50,11 +46,11 @@ resource "hcloud_load_balancer_service" "main-talosctl" {
 
 resource "hcloud_server" "cpn" {
   name        = "cpn-${format("%02d", count.index)}"
-  image       = data.hcloud_image.talos.id
+  image       = var.hcloud_image
   count       = var.cpn_count
   server_type = "cpx21"
   location    = var.hcloud_location
-  labels      = {
+  labels = {
     type = "cpn"
   }
   user_data = data.talos_machine_configuration.cpn.machine_configuration
@@ -62,11 +58,11 @@ resource "hcloud_server" "cpn" {
 
 resource "hcloud_server" "wkn" {
   name        = "wkn-${format("%02d", count.index)}"
-  image       = data.hcloud_image.talos.id
+  image       = var.hcloud_image
   count       = var.wkn_count
   server_type = "cpx21"
   location    = var.hcloud_location
-  labels      = {
+  labels = {
     type = "wkn"
   }
   user_data = data.talos_machine_configuration.wkn.machine_configuration
@@ -88,7 +84,7 @@ resource "talos_machine_secrets" "this" {}
 data "talos_client_configuration" "this" {
   cluster_name         = var.cluster_name
   client_configuration = talos_machine_secrets.this.client_configuration
-  endpoints            = [
+  endpoints = [
     hcloud_load_balancer.main.ipv4
   ]
 }
@@ -98,7 +94,7 @@ data "talos_machine_configuration" "cpn" {
   cluster_endpoint = "https://${hcloud_load_balancer.main.ipv4}:6443"
   machine_type     = "controlplane"
   machine_secrets  = talos_machine_secrets.this.machine_secrets
-  config_patches   = [
+  config_patches = [
     templatefile("${path.module}/templates/cpn.yaml.tmpl", {}
     )
   ]
@@ -116,7 +112,7 @@ data "talos_machine_configuration" "wkn" {
   cluster_endpoint = "https://${hcloud_load_balancer.main.ipv4}:6443"
   machine_type     = "worker"
   machine_secrets  = talos_machine_secrets.this.machine_secrets
-  config_patches   = [
+  config_patches = [
     templatefile("${path.module}/templates/wkn.yaml.tmpl", {})
   ]
 }
@@ -132,7 +128,7 @@ resource "talos_machine_bootstrap" "bootstrap" {
   client_configuration = talos_machine_secrets.this.client_configuration
   endpoint             = hcloud_server.cpn[0].ipv4_address
   node                 = hcloud_server.cpn[0].ipv4_address
-  depends_on           = [
+  depends_on = [
     hcloud_server.cpn
   ]
 }
