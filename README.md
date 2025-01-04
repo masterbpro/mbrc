@@ -14,7 +14,7 @@ Kubernetes deployment and focus on your applications with confidence.
 ### Terminology
 
 | Terminology | Meaning                |
-|-------------|------------------------|
+| ----------- | ---------------------- |
 | CPN         | Control Panel Node     |
 | WKN         | Worker Kubernetes Node |
 
@@ -33,6 +33,7 @@ brew install kubectl
 # you need change values before execute command
 cat << EOF > terraform/terraform.tfvars
 hcloud_token = "YOUR_TOKEN_FROM_HETZNER"
+hcloud_image = 1234567890
 cf_token     = "YOUR_TOKEN_FROM_CLOUDFLARE"
 wkn_count    = 0
 EOF
@@ -41,7 +42,7 @@ EOF
 ### 2. Create private and public key for SOPS
 
 ```shell
-age-keygen -o age.agekey && 
+age-keygen -o age.agekey &&
 age_pubkey=$(awk '/^# public key:/{print $NF}' age.agekey) &&
 echo "
 creation_rules:
@@ -117,7 +118,6 @@ sops -i -d db-auth.yaml.yaml
 ```
 
 </details>
-
 
 <details>
 <summary>FluxCD Example</summary>
