@@ -15,7 +15,7 @@ Kubernetes deployment and focus on your applications with confidence.
 
 | Terminology | Meaning                |
 | ----------- | ---------------------- |
-| CPN         | Control Panel Node     |
+| CPN         | Control Plane Node     |
 | WKN         | Worker Kubernetes Node |
 
 ### 0. Install tools
