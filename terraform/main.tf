@@ -11,7 +11,7 @@ resource "hcloud_network_subnet" "nodes" {
   network_id   = hcloud_network.this.id
   type         = "cloud"
   network_zone = "eu-central"
-  ip_range     = "10.0.0.0/24"
+  ip_range     = "10.0.1.0/24"
 }
 
 # NLB for Talos OS and Kubernetes
@@ -80,7 +80,12 @@ resource "hcloud_server" "cpn" {
   user_data = data.talos_machine_configuration.cpn.machine_configuration
   network {
     network_id = hcloud_network_subnet.nodes.network_id
+    ip = cidrhost(hcloud_network_subnet.nodes.ip_range, count.index + 100)
     alias_ips = [] # https://github.com/hetznercloud/terraform-provider-hcloud/issues/650
+  }
+  public_net {
+    ipv4_enabled = true
+    ipv6_enabled = true
   }
   depends_on = [
     data.talos_machine_configuration.cpn,
@@ -89,7 +94,8 @@ resource "hcloud_server" "cpn" {
   lifecycle {
     ignore_changes = [
       image,
-      user_data
+      user_data,
+      network
     ]
   }
 }
@@ -124,6 +130,7 @@ resource "hcloud_server" "wkn" {
   user_data = data.talos_machine_configuration.wkn.machine_configuration
   network {
     network_id = hcloud_network_subnet.nodes.network_id
+    ip = cidrhost(hcloud_network_subnet.nodes.ip_range, count.index + 200)
     alias_ips = [] # https://github.com/hetznercloud/terraform-provider-hcloud/issues/650
   }
   depends_on = [
@@ -133,7 +140,8 @@ resource "hcloud_server" "wkn" {
   lifecycle {
     ignore_changes = [
       image,
-      user_data
+      user_data,
+      network
     ]
   }
 }
@@ -205,8 +213,9 @@ resource "kubernetes_secret" "hcloud" {
     namespace = "kube-system"
   }
   data = {
-    token = var.hcloud_token
-    image = var.hcloud_image
+    token   = var.hcloud_token
+    image   = var.hcloud_image
+    network = hcloud_network.this.id
   }
   depends_on = [
     talos_machine_bootstrap.bootstrap
