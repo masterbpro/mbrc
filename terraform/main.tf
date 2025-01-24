@@ -72,7 +72,7 @@ resource "hcloud_server" "cpn" {
   name        = "cpn-${format("%02d", count.index)}"
   image       = var.hcloud_image
   count       = var.cpn_count
-  server_type = "cpx21"
+  server_type = "cx22"
   location    = var.hcloud_location
   labels = {
     type = "cpn"
@@ -122,7 +122,7 @@ resource "hcloud_server" "wkn" {
   name        = "wkn-${format("%02d", count.index)}"
   image       = var.hcloud_image
   count       = var.wkn_count
-  server_type = "cpx21"
+  server_type = "cx22"
   location    = var.hcloud_location
   labels = {
     type = "wkn"

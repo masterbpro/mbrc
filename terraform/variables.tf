@@ -12,7 +12,7 @@ variable "cluster_name" {
 }
 
 variable "hcloud_location" {
-  default = "fsn1" # https://docs.hetzner.com/cloud/general/locations/
+  default = "hel1" # https://docs.hetzner.com/cloud/general/locations/
 }
 
 variable "cpn_count" {
@@ -25,4 +25,8 @@ variable "wkn_count" {
 
 variable "sops_private_key" {
   default = "../age.agekey"
+}
+
+variable "hcloud_image" {
+  default = ""
 }
