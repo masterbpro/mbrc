@@ -34,7 +34,6 @@ brew install kubectl
 cat << EOF > terraform/terraform.tfvars
 hcloud_token = "YOUR_TOKEN_FROM_HETZNER"
 hcloud_image = 1234567890
-cf_token     = "YOUR_TOKEN_FROM_CLOUDFLARE"
 wkn_count    = 0
 EOF
 ```

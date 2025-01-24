@@ -2,17 +2,17 @@ variable "hcloud_token" {
   default = ""
 }
 
-variable "cf_token" {
+variable "hcloud_image" {
   default = ""
 }
+
 
 variable "cluster_name" {
   default = "mbrc"
 }
 
-
 variable "hcloud_location" {
-  default = "hel1"
+  default = "fsn1" # https://docs.hetzner.com/cloud/general/locations/
 }
 
 variable "cpn_count" {
@@ -25,8 +25,4 @@ variable "wkn_count" {
 
 variable "sops_private_key" {
   default = "../age.agekey"
-}
-
-variable "hcloud_image" {
-  default = ""
 }
