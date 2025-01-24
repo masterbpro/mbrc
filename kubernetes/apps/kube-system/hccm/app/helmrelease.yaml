@@ -23,3 +23,12 @@ spec:
         name: hcloud
         namespace: flux-system
   interval: 15m
+  values:
+    env:
+      HCLOUD_NETWORK:
+        valueFrom:
+          secretKeyRef:
+            name: hcloud
+            key: network
+      HCLOUD_NETWORK_ROUTES_ENABLED:
+        value: "false"
