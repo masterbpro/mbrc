@@ -1,0 +1,61 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app permission-manager
+  namespace: &ns base-system
+spec:
+  releaseName: *app
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  chart:
+    spec:
+      chart: *app
+      version: "0.1.1"
+      sourceRef:
+        kind: HelmRepository
+        name: sighupio
+        namespace: flux-system
+  interval: 15m
+  values:
+    image:
+      tag: v1.9.0
+
+    config:
+      clusterName: "main"
+      controlPlaneAddress: "https://kubernetes:443"
+      basicAuthPassword: "password"
+
+      templates:
+        - name: admin
+          rules:
+            - apiGroups:
+                - "*"
+              resources:
+                - "*"
+              verbs:
+                - "*"
+
+        - name: developer
+          rules:
+            - apiGroups:
+                - "*"
+              resources:
+                - "configmaps"
+                - "secrets"
+                - "endpoints"
+                - "pods"
+                - "pods/log"
+                - "pods/portforward"
+                - "services"
+                - "events"
+                - "deployments"
+                - "replicasets"
+              verbs:
+                - "*"
