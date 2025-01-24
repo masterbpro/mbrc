@@ -6,7 +6,6 @@ variable "hcloud_image" {
   default = ""
 }
 
-
 variable "cluster_name" {
   default = "mbrc"
 }
@@ -25,8 +24,4 @@ variable "wkn_count" {
 
 variable "sops_private_key" {
   default = "../age.agekey"
-}
-
-variable "hcloud_image" {
-  default = ""
 }
