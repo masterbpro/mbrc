@@ -56,8 +56,21 @@ to encrypt their secrets using the public key. Remember, keep the `age.agekey` p
 ### 3. Create k8s cluster
 
 Before enter command bellow you need prepare Talos snapshot in Hetzner Cloud. For this, you can use
-official [instruction](https://www.talos.dev/v1.6/talos-guides/install/cloud-platforms/hetzner/#rescue-mode).
-You have to give the name of the snapshot `talos-1.15`
+official [instruction](https://www.talos.dev/v1.9/talos-guides/install/cloud-platforms/hetzner/#rescue-mode).
+You have to give the name of the snapshot `talos-1.9.3`
+
+<details>
+<summary>Create Talos OS snapshot</summary>
+
+```shell
+# create an x86 server and connect to it via ssh, then run:
+cd /tmp
+wget -O /tmp/talos.raw.xz https://factory.talos.dev/image/1c924f0d41b37542e63612149946f0a62094ea88e1e0e3ae93a15246625e6775/v1.9.3/hcloud-amd64.raw.xz
+xz -d -c /tmp/talos.raw.xz | dd of=/dev/sda && sync
+shutdown -h now
+```
+
+</details>
 
 ```shell
 terraform init
