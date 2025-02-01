@@ -1,0 +1,33 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-piraeus
+  namespace: flux-system
+spec:
+  targetNamespace: base-system
+  path: kubernetes/apps/base-system/piraeus/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  interval: 15m
+  retryInterval: 1m
+  timeout: 10m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-piraeus-crds
+  namespace: flux-system
+spec:
+  targetNamespace: base-system
+  dependsOn:
+    - name: cluster-apps-piraeus
+  path: kubernetes/apps/base-system/piraeus/crds
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  interval: 15m
+  retryInterval: 1m
+  timeout: 10m
