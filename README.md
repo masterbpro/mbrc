@@ -57,7 +57,7 @@ to encrypt their secrets using the public key. Remember, keep the `age.agekey` p
 
 Before enter command bellow you need prepare Talos snapshot in Hetzner Cloud. For this, you can use
 official [instruction](https://www.talos.dev/v1.9/talos-guides/install/cloud-platforms/hetzner/#rescue-mode).
-You have to give the name of the snapshot `talos-1.9.3`
+Your snapshot of talos image will be specified as the value of variable "hcloud_image" 
 
 <details>
 <summary>Create Talos OS snapshot</summary>
